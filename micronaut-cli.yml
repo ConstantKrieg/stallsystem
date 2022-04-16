@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: org.github
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: maven
+features: [annotation-api, app-name, http-client, jackson-databind, junit, kotlin, kotlin-application, logback, maven, mongo-reactive, netty-server, reactor, reactor-http-client, readme, shade, testcontainers, yaml]

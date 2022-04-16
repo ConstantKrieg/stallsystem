@@ -1,0 +1,24 @@
+micronaut:
+  application:
+    name: stallsystem
+  server:
+    netty:
+      log-level: INFO
+
+  security:
+    enabled: true
+    token:
+      jwt:
+        signatures:
+          jwks:
+            auth0:
+              url: '${OAUTH_JWKS}'
+netty:
+  default:
+    allocator:
+      max-order: 3
+mongodb:
+  uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_DB}.xlbh3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+horse_perf:
+  collection: 'horse_performances'
