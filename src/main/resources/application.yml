@@ -2,6 +2,7 @@ micronaut:
   application:
     name: stallsystem
   server:
+    port: ${PORT}
     netty:
       log-level: INFO
 
