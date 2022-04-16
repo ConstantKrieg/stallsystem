@@ -1,1 +1,1 @@
-web: java -jar target/stallsystem*.jar
+web: java -Dserver.port=$PORT -jar target/stallsystem*.jar
