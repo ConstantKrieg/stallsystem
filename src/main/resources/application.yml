@@ -21,4 +21,5 @@ mongodb:
   uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_DB}.xlbh3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 horse_perf:
+  name: 'stallform'
   collection: 'horse_performances'
