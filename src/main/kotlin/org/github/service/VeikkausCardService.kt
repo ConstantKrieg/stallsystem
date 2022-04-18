@@ -174,7 +174,10 @@ class VeikkausCardService (
 
                     betOffers.add(BetOffer("WINNER", -1F, odds.toFloat()))
 
-                    val info = HorseInfo(runner.driverName, runner.coachName, runner.stats.total.starts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
+                    val driverName: String = runner.driverName ?: "-"
+                    val coachName: String = runner.coachName ?: "-"
+                    
+                    val info = HorseInfo(driverName, coachName, runner.stats.total.starts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
                     return@collectHorses Horse(runner.startNumber, runner.name, info, betOffers)
                 }
 
