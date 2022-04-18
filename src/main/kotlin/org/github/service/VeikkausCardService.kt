@@ -176,7 +176,7 @@ class VeikkausCardService (
 
                     val driverName: String = runner.driverName ?: "-"
                     val coachName: String = runner.coachName ?: "-"
-                    
+
                     val info = HorseInfo(driverName, coachName, runner.stats.total.starts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
                     return@collectHorses Horse(runner.startNumber, runner.name, info, betOffers)
                 }

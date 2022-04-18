@@ -18,9 +18,9 @@ data class HorsePerformance @Creator @BsonCreator constructor(
     var distance: Int,
     @Nullable
     @BsonProperty("driverName")
-    var driverName: String,
+    var driverName: String?,
     @BsonProperty("coachName")
-    var coachName: String,
+    var coachName: String?,
     @BsonProperty("winner")
     var winner: Boolean,
     @BsonProperty("time")
