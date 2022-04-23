@@ -9,12 +9,12 @@ import java.util.*
 
 @Singleton
 @CacheConfig("coach")
-class CoachStatService (
+open class CoachStatService (
     private val performanceService: HorsePerformanceRepository
 ){
 
     @Cacheable
-    open fun getStallForm(coachName: String): Mono<Double> {
+    fun getStallForm(coachName: String): Mono<Double> {
         val calendar: Calendar = Calendar.getInstance()
 
         val totalStartsMono: Mono<Long> = Mono.from(performanceService.getCoachStarts(coachName))
