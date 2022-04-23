@@ -14,7 +14,7 @@ open class CoachStatService (
 ){
 
     @Cacheable
-    fun getStallForm(coachName: String): Mono<Double> {
+    open fun getStallForm(coachName: String): Mono<Double> {
         val calendar: Calendar = Calendar.getInstance()
 
         val totalStartsMono: Mono<Long> = Mono.from(performanceService.getCoachStarts(coachName))
