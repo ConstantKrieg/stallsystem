@@ -17,6 +17,7 @@ import reactor.core.publisher.toFlux
 class VeikkausCardService (
     private val veikkausClient: VeikkausClient,
     private val unibetOddService: UnibetOddService,
+    private val coachStatService: CoachStatService,
     private val performanceService: HorsePerformanceRepository
     ): CardService {
 
@@ -157,7 +158,7 @@ class VeikkausCardService (
 
                 val veikkausRunnersResp: VeikkausRunnersResp = objectMapper.readValue(horseResponseString, VeikkausRunnersResp::class.java)
 
-                val horses: List<Horse> = veikkausRunnersResp.horses.map collectHorses@{ runner ->
+                val horses: List<Mono<Horse>> = veikkausRunnersResp.horses.map collectHorses@{ runner ->
                     val odds: Double =  oddsMap.getOrDefault(runner.startNumber, -1.0)
                     val hasFrontShoes: Boolean = runner.frontShoes == "HAS_SHOES"
                     val hasRearShoes: Boolean = runner.rearShoes == "HAS_SHOES"
@@ -178,10 +179,13 @@ class VeikkausCardService (
                     val coachName: String = runner.coachName ?: "-"
 
                     val info = HorseInfo(driverName, coachName, runner.stats.total.starts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
-                    return@collectHorses Horse(runner.startNumber, runner.name, info, betOffers)
+
+                    return@collectHorses coachStatService.getStallForm(coachName).flatMap { stallForm ->
+                         Mono.just(Horse(runner.startNumber, runner.name, info, stallForm, betOffers))
+                    }
                 }
 
-                return@flatMap Mono.just(horses)
+                return@flatMap Flux.fromIterable(horses).flatMap { horse -> horse }.collectList()
             }
     }
 }
