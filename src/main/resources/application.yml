@@ -8,7 +8,7 @@ micronaut:
   cache:
     coach:
       maximum-size: 500
-      expire-after-access: PT3H
+      expire-after-write: PT12H
   security:
     enabled: true
     token:
