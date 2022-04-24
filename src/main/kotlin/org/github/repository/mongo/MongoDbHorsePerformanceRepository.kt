@@ -1,5 +1,6 @@
 package org.github.repository.mongo
 
+import com.mongodb.client.model.Filters.and
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.reactivestreams.client.MongoClient
 import com.mongodb.reactivestreams.client.MongoCollection
@@ -18,20 +19,26 @@ open class MongoDbHorsePerformanceRepository(
     override fun list(): Publisher<HorsePerformance> = collection.find()
 
     override fun getCarStartWinsByTrack(trackId: String): Publisher<HorsePerformance> = collection.find(
-        eq("track", trackId)
-            .also { eq("winner", true) }
-            .also { eq("car_start", true) }
+        and(
+            eq("track", trackId),
+            eq("winner", true),
+            eq("car_start", true)
+        )
     )
 
     override fun getVoltStartWinsByTrack(trackId: String): Publisher<HorsePerformance> = collection.find(
-        eq("track", trackId)
-            .also { eq("winner", true) }
-            .also { eq("car_start", false) }
+        and(
+            eq("track", trackId),
+            eq("winner", true),
+            eq("car_start", false)
+        )
     )
 
     override fun getCoachWins(coachName: String): Publisher<Long> = collection.countDocuments(
-        eq("coachName", coachName)
-            .also { eq("winner", true) }
+        and(
+            eq("coachName", coachName),
+            eq("winner", true)
+        )
     )
 
     override fun getCoachStarts(coachName: String): Publisher<Long> = collection.countDocuments(
@@ -39,16 +46,20 @@ open class MongoDbHorsePerformanceRepository(
     )
 
     override fun getCoachWinsFromMonthAndYear(coachName: String, year: Int, month: Int): Publisher<Long> = collection.countDocuments(
-        eq("coachName", coachName)
-            .also { eq("winner", true) }
-            .also { eq("month", month) }
-            .also { eq("year", year) }
+        and(
+            eq("coachName", coachName),
+            eq("winner", true),
+            eq("month", month),
+            eq("year", year)
+        )
     )
 
     override fun getCoachStartsFromMonthAndYear(coachName: String, year: Int, month: Int): Publisher<Long> = collection.countDocuments(
-        eq("coachName", coachName)
-            .also { eq("month", month) }
-            .also { eq("year", year) }
+        and(
+            eq("coachName", coachName),
+            eq("month", month),
+            eq("year", year)
+        )
     )
 
     private val collection: MongoCollection<HorsePerformance>

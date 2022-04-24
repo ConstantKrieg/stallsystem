@@ -16,15 +16,14 @@ open class CoachStatService (
     @Cacheable
     open fun getStallForm(coachName: String): Mono<Double> {
         val calendar: Calendar = Calendar.getInstance()
-
-        val totalStartsMono: Mono<Long> = Mono.from(performanceService.getCoachStarts(coachName))
-        val totalWinsMono: Mono<Long> = Mono.from(performanceService.getCoachWins(coachName))
-
-        val currentMonth = calendar[Calendar.MONTH]
+        val currentMonth = calendar[Calendar.MONTH] + 1
         val currentYear = calendar[Calendar.YEAR]
 
         val prevMonth = if (currentMonth == 1) 12 else currentMonth - 1
         val prevMonthYear = if (currentMonth == 1) currentYear - 1 else currentYear
+
+        val totalStartsMono: Mono<Long> = Mono.from(performanceService.getCoachStarts(coachName))
+        val totalWinsMono: Mono<Long> = Mono.from(performanceService.getCoachWins(coachName))
 
         val currMonthStartsMono: Mono<Long> = Mono.from(performanceService.getCoachStartsFromMonthAndYear(coachName, currentYear, currentMonth))
         val currMonthWinsMono: Mono<Long> = Mono.from(performanceService.getCoachWinsFromMonthAndYear(coachName, currentYear, currentMonth))
@@ -33,7 +32,7 @@ open class CoachStatService (
         val prevMonthWinsMono: Mono<Long> = Mono.from(performanceService.getCoachWinsFromMonthAndYear(coachName, prevMonthYear, prevMonth))
 
 
-        return Mono.zip(
+       return Mono.zip(
             totalWinsMono,
             currMonthWinsMono,
             prevMonthWinsMono,
