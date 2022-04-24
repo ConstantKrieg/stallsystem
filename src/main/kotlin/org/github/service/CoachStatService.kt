@@ -15,7 +15,6 @@ open class CoachStatService (
 ){
 
     @Cacheable
-    @Scheduled(cron = "0 0 5 1/1 * ?")
     open fun getStallForm(coachName: String): Mono<Double> {
         val calendar: Calendar = Calendar.getInstance()
         val currentMonth = calendar[Calendar.MONTH] + 1

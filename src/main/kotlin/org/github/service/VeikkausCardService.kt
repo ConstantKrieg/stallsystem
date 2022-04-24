@@ -2,6 +2,7 @@ package org.github.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import io.micronaut.scheduling.annotation.Scheduled
 import jakarta.inject.Singleton
 import org.github.client.VeikkausClient
 import org.github.model.HorsePerformance
@@ -22,6 +23,11 @@ class VeikkausCardService (
     ): CardService {
 
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
+
+    @Scheduled(cron = "0 0 5 1/1 * ?")
+    fun buildCache(){
+        fetchCards().subscribe()
+    }
 
     override fun fetchCards(): Mono<List<Card>> {
 
