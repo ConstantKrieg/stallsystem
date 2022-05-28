@@ -169,8 +169,17 @@ class VeikkausCardService (
                     val hasFrontShoes: Boolean = runner.frontShoes == "HAS_SHOES"
                     val hasRearShoes: Boolean = runner.rearShoes == "HAS_SHOES"
 
-                    val totalMoneyPerStart: Double = runner.stats.total.winMoney.toDouble() / runner.stats.total.starts.toDouble() / 100
-                    val currentYearMoneyPerStart: Double = runner.stats.currentYear.winMoney.toDouble() / runner.stats.currentYear.starts.toDouble() / 100
+
+                    var totalMoneyPerStart = 0.0
+                    var currentYearMoneyPerStart = 0.0
+                    var totalStarts = 0
+
+                    if (runner.stats != null) {
+                        totalMoneyPerStart = runner.stats.total.winMoney.toDouble() / runner.stats.total.starts.toDouble() / 100
+                        currentYearMoneyPerStart = runner.stats.currentYear.winMoney.toDouble() / runner.stats.currentYear.starts.toDouble() / 100
+                        totalStarts = runner.stats.total.starts
+                    }
+
 
                     val betOffers: MutableList<BetOffer> = vGamesOddsMaps.mapNotNull { vGameOdds ->
                         vGameOdds.getOrDefault(runner.id, null)
@@ -184,7 +193,7 @@ class VeikkausCardService (
                     val driverName: String = runner.driverName ?: "-"
                     val coachName: String = runner.coachName ?: "-"
 
-                    val info = HorseInfo(driverName, coachName, runner.stats.total.starts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
+                    val info = HorseInfo(driverName, coachName, totalStarts, currentYearMoneyPerStart, totalMoneyPerStart, hasFrontShoes, hasRearShoes)
 
                     return@collectHorses coachStatService.getStallForm(coachName).flatMap { stallForm ->
                          Mono.just(Horse(runner.startNumber, runner.name, info, stallForm, betOffers))

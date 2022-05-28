@@ -15,5 +15,5 @@ data class VeikkausHorse(
     @JsonSetter(nulls = Nulls.SKIP) @JsonProperty("rearShoes") val rearShoes: String?,
     @JsonSetter(nulls = Nulls.SKIP) @JsonProperty("driverName") var driverName: String?,
     @JsonSetter(nulls = Nulls.SKIP) @JsonProperty("coachName") val coachName: String?,
-    @JsonProperty("stats") val stats: VeikkausHorseStats
+    @JsonSetter(nulls = Nulls.SKIP) @JsonProperty("stats") val stats: VeikkausHorseStats?
 )

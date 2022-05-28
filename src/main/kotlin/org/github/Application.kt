@@ -7,8 +7,3 @@ fun main(args: Array<String>) {
 		.packages("org.github")
 		.start()
 }
-
-
-// https://fi.unibet.com/sportsbook-feeds/breadcrumbs/event/1018560523
-
-//https://eu-offering.kambicdn.org/offering/v2018/ub/betoffer/event/1018560523.json

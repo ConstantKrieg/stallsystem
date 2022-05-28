@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class VeikkausRace(
     @JsonProperty("raceId") val id: Int,
     @JsonProperty("number") val raceNumber: Int,
-    @JsonProperty("breed") val breed: String,
+    @JsonProperty("breed") val breed: String = "L",
     @JsonProperty("startType") val startType: String,
     @JsonProperty("distance") val distance: Int,
 )
