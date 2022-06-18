@@ -35,8 +35,8 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           use_existing_version_if_available: false
-          application_name: stall-propaganda
-          environment_name: Stallpropaganda-env
+          application_name: stallsystem
+          environment_name: Stallsystem-env
           version_label: ${{github.SHA}}
           region: eu-north-1
           deployment_package: stallsystem-0.1.jar
