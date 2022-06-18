@@ -11,6 +11,7 @@ import org.github.model.unibet.UnibetBetOffer
 import org.github.model.unibet.UnibetEvent
 import org.github.model.unibet.UnibetEventResponse
 import reactor.core.publisher.Flux
+import java.util.*
 
 @Singleton
 class UnibetOddService (
@@ -45,7 +46,7 @@ class UnibetOddService (
 
                 val cardOddsMap = oddsMapList
                     .flatMap { it.entries }
-                    .associate { it.key to it.value }
+                    .associate { it.key.lowercase(Locale.getDefault()) to it.value }
 
                 return@flatMap Mono.just(cardOddsMap)
             }

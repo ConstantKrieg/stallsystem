@@ -13,6 +13,7 @@ import org.reactivestreams.Publisher
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
+import java.util.*
 
 @Singleton
 class VeikkausCardService (
@@ -24,7 +25,7 @@ class VeikkausCardService (
 
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
-    @Scheduled(cron = "0 0 5 1/1 * ?")
+    @Scheduled(cron = "0 0 8 1/1 * ?")
     fun buildCache(){
         fetchCards().subscribe()
     }
@@ -186,7 +187,7 @@ class VeikkausCardService (
                     }.toMutableList()
 
                     val unibetName: String = runner.name.split("*")[0] // Veikkaus usually ends horse names with asterisks and the country they were born in. We take that part out here
-                    unibetOdds[unibetName]?.let { betOffers.add(it) }
+                    unibetOdds[unibetName.lowercase(Locale.getDefault())]?.let { betOffers.add(it) }
 
                     betOffers.add(BetOffer("WINNER", -1F, odds.toFloat()))
 
