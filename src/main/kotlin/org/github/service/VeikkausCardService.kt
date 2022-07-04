@@ -25,7 +25,7 @@ class VeikkausCardService (
 
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
-    @Scheduled(cron = "0 0 9 1/1 * ?")
+    @Scheduled(cron = "0 0 5 1/1 * ?")
     fun buildCache(){
         fetchCards().subscribe()
     }
